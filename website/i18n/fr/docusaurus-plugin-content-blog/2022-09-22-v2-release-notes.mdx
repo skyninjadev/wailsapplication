@@ -1,0 +1,98 @@
+---
+slug: wails-v2-released
+title: Publication Wails v2
+authors:
+  - leaanthony
+tags:
+  - wails
+  - v2
+---
+
+```mdx-code-block
+<div class="text--center">
+  <img
+    src={require("@site/static/img/blog/montage.png").default}
+    width="75%"
+  />
+</div>
+<br />
+```
+
+# C'est là!
+
+Aujourd'hui marque la sortie de [Wails](https://wails.io) v2. Il y a environ 18 mois depuis la première version alpha de la v2 et environ un an depuis la première version bêta. Je suis vraiment reconnaissant à toutes les personnes impliquées dans l'évolution du projet.
+
+Une partie de la raison pour laquelle il a fallu aussi longtemps était dû à la volonté d'obtenir une version bien stable et complète avant de l'appeler officiellement v2. La vérité est qu'il n'y a jamais un moment parfait pour taguer une version - il y a toujours des problèmes en suspens ou une fonctionnalité de plus pour y ajouter. Taguer une version majeure imparfaite ça arrive, cependant, ça permet de fournir un peu de stabilité pour les utilisateurs du projet, ainsi qu'un peu de réinitialisation pour les développeurs.
+
+Cette version contient bien plus que ce à quoi je m'attendais. J'espère qu'il vous donnera autant de plaisir qu'il nous en a donné de le développer.
+
+# Qu'est-ce Wails?
+
+Si vous n'êtes pas familier avec Wails, c'est un projet qui permet aux programmeurs Go de fournir des interfaces pour leurs programmes Go en utilisant des technologies web. C'est une alternative Go à Electron. Beaucoup plus d'informations peuvent être trouvées sur le site [officiel](https://wails.io/docs/introduction).
+
+# Quelles sont les nouveautés ?
+
+La version v2 est un énorme bond en avant pour le projet, en abordant la plupart des points douloureux de la v1. Si vous n'avez lu aucun des articles de blog sur la version bêta pour [macOS](/blog/wails-v2-beta-for-mac), [Windows](/blog/wails-v2-beta-for-windows) ou [Linux](/blog/wails-v2-beta-for-linux), alors je vous encourage à le faire car il couvre tous les changements majeurs plus en détail. En Résumé:
+
+- Le composant Webview2 pour Windows qui prend en charge les standards Web modernes et les capacités de débogage.
+- [Thème sombre / clair](/docs/reference/options#theme) + [thème personnalisé](/docs/reference/options#customtheme) sur Windows.
+- Windows n'a plus besoin de CGO.
+- Prise en charge des modèles de projet Svelte, Vue, React, Preact, Lit & Vanilla.
+- [Intégration de Vite](https://vitejs.dev/) fournissant un environnement de développement de rechargement à chaud pour votre application.
+- Support des [menus](/docs/guides/application-development#application-menu) et [boites de dialogues](/docs/reference/runtime/dialog) natifs.
+- Effets de transparence de fenêtre native pour [Windows](/docs/reference/options#windowistranslucent) et [macOS](/docs/reference/options#windowistranslucent-1). Prise en charge des fonds Mica & Acrylic.
+- Générez facilement un [installateur NSIS](/docs/guides/windows-installer) pour les déploiements Windows.
+- Une riche bibliothèque [runtime](/docs/reference/runtime/intro) fournissant des méthodes utilitaires pour la manipulation de fenêtres, évènements, les boites de dialogues, les menus et les logs.
+- Prise en charge pour le [masquage](/docs/guides/obfuscated) de votre application en utilisant [garble](https://github.com/burrowers/garble).
+- Prise en charge de la compression de votre application en utilisant [UPX](https://upx.github.io/).
+- Génération automatique en TypeScript de structures Go. Plus d'infos [ici](/docs/howdoesitwork#calling-bound-go-methods).
+- Aucune autre bibliothèque ou DLL ne doit être fournie avec votre application. Pour n'importe quelle plateforme.
+- Pas d'obligation de regrouper les actifs en frontend. Il vous suffit de développer votre application comme toute autre application web.
+
+# Crédits & Remerciements
+
+Le passage à la v2 a été un effort énorme. Il y a eu ~2.2K commits par 89 contributeurs entre l'alpha initial et la publication aujourd'hui, et plusieurs, beaucoup d'autres qui ont fourni des traductions, des tests, des commentaires et de l'aide sur les forums de discussion ainsi que le suivi des problèmes. Je suis si incroyablement reconnaissant de chacun de vous. Je voudrais également remercier tout particulièrement tous les commanditaires du projet qui ont fourni des conseils, des conseils et des commentaires. Tout ce que vous faites est grandement apprécié.
+
+Il y a quelques personnes auxquelles je voudrais donner une mention spéciale à:
+
+Tout d'abord, un **grand merci** à [@stffabi](https://github.com/stffabi) qui a fourni tant de contributions dont nous bénéficions tous, en plus de fournir un grand soutien sur de nombreuses questions. Il a fourni quelques fonctionnalités clés comme le support du serveur de développement externe qui a transformé notre offre de mode de développement en nous permettant de nous brancher sur les superpouvoirs de [Vite](https://vitejs.dev/). Il est juste de dire que Wails v2 serait une version beaucoup moins excitante sans ses [contributions incroyables](https://github.com/wailsapp/wails/commits?author=stffabi&since=2020-01-04). Merci beaucoup @stffabi!
+
+Je voudrais également adresser un cri énorme à [@misitebao](https://github.com/misitebao) qui a inlassablement maintenu le site web en plus de fournir des traductions chinoises, de gérer Crowdin et d'aider les nouveaux traducteurs à se mettre à la hauteur. C'est une tâche extrêmement importante, et je suis extrêmement reconnaissant pour tout le temps et les efforts consentis dans cette tâche! Tu assures !
+
+Enfin, et surtout, un grand merci à Mat Ryer qui a fourni des conseils et du soutien pendant le développement de la v2. Écrire xBar ensemble en utilisant une Alpha de v2 était utile pour façonner la direction de v2, en plus de me donner une compréhension de certains défauts de conception dans les premières versions. Je suis heureux de vous annoncer qu'à partir d'aujourd'hui, nous allons commencer à porter xBar sur Wails v2, et il deviendra l'application phare du projet. Bravo Mat!
+
+# Leçons apprises
+
+Il y a un certain nombre de leçons apprises à se rendre à la version 2 qui façonneront les futurs développements.
+
+## Des versions plus petites, plus rapides et ciblées
+
+Au cours du développement de la version 2, de nombreuses fonctionnalités et corrections de bogues ont été développées sur une base ad-hoc. Cela a entraîné des cycles de publication plus longs et a été plus difficile à déboger. Dans le futur, nous allons créer des versions plus souvent qui incluront un nombre réduit de fonctionnalités. Une version implique des mises à jour de la documentation ainsi que des tests approfondis. Espérons que ces versions plus petites, plus rapides et ciblées conduiront à moins de régressions et à une meilleure qualité de la documentation.
+
+## Encourager l'engagement
+
+Lors du lancement de ce projet, je voulais aider immédiatement tous ceux qui avaient un problème. Les problèmes étaient "personnels" et je voulais les résoudre le plus rapidement possible. Ceci n'est pas durable et va finalement à l'encontre de la longévité du projet. En avançant, je donnerai plus de place aux gens pour s'impliquer dans la réponse aux questions et vis à vis du triage. Il serait bon d'obtenir des outils pour aider à cela, donc si vous avez des suggestions, veuillez vous joindre à la discussion [ici](https://github.com/wailsapp/wails/discussions/1855).
+
+## Apprendre à dire non
+
+Plus il y a de personnes qui s'engagent dans un projet Open Source, plus il y aura de requêtes pour des fonctionnalités supplémentaires qui peuvent ou non être utiles à la majorité des personnes. Ces fonctionnalités prendront un temps initial de développement et de débogage, et entraîneront un coût de maintenance continu à partir de ce moment. Je suis moi-même coupable de cela, souvent vouloir "remuer terre et mer" plutôt que de fournir la caractéristique minimale viable. Dorénavant, nous devrons dire "Non" un peu plus pour ajouter des fonctionnalités de base et concentrer nos énergies sur un moyen de permettre aux développeurs de fournir eux-mêmes cette fonctionnalité. Nous examinons sérieusement les plugins pour ce scénario. Cela permettra à tous de prolonger le projet comme bon leur semble, tout en fournissant un moyen facile de contribuer au projet.
+
+# Un regard tourné vers l'avenir
+
+Il y a tant de fonctionnalités fondamentales que nous envisageons d'ajouter à Wails dans le prochain cycle de développement majeur. La [feuille de route](https://github.com/wailsapp/wails/discussions/1484) est pleine d'idées intéressantes, et je suis impatient de commencer à y travailler. Une des grandes demandes a été le support de plusieurs fenêtres. C'est délicat et pour le faire correctement, et nous pourrions avoir besoin d'envisager de fournir une API alternative, car la version courante n'a pas été conçue en gardant cela à l'esprit. Sur la base de quelques idées préliminaires et de commentaires, je pense que vous aimerez où nous allons aller.
+
+Personnellement, je suis très excité à l'idée de faire fonctionner des applications Wails sur mobile. Nous avons déjà un projet de démo qui montre qu'il est possible d'exécuter une application Wails sur Android, donc je suis vraiment impatient d'explorer où nous pouvons aller avec ceci!
+
+Un dernier point que je voudrais soulever est celui de la parité des fonctionnalités. Cela fait longtemps que nous n'ajouterions rien au projet sans un support cross-plateforme complet. Bien que cela se soit avéré (principalement) réalisable jusqu'à présent, il a vraiment repoussé le projet dans la publication de nouvelles fonctionnalités. A présent, nous adopterons une approche légèrement différente : toute nouvelle fonctionnalité qui ne peut pas être publiée immédiatement pour toutes les plates-formes sera publiée sous une configuration expérimentale ou une API. Cela permet aux adopteurs précoces sur certaines plates-formes d'essayer la fonctionnalité et de fournir des commentaires qui alimenteront la conception finale de la fonctionnalité. Ceci, bien sûr, signifie qu'il n'y a aucune garantie de stabilité de l'API tant qu'il n'est pas entièrement supporté par toutes les plateformes sur lesquelles il peut être supporté, mais au moins cela débloquera le développement.
+
+# Derniers Mots
+
+Je suis vraiment fier de ce que nous avons pu réaliser avec la version V2. C'est incroyable de voir ce que les gens ont déjà pu construire en utilisant les versions bêta jusqu'à présent. Applications de qualité comme [Varly](https://varly.app/), [Surge](https://getsurge.io/) et [October](https://october.utf9k.net/). Je vous encourage à aller voir ces projets.
+
+Cette version a été obtenue grâce au travail acharné de nombreux contributeurs. Bien qu'il soit gratuit à télécharger et à utiliser, il n'a pas rien coûté. Ne vous y trompez pas, ce projet a eu un coût considérable. Ce n'est pas seulement mon temps et le temps de chaque contributeur, mais aussi le coût de l'absence des amis et des familles de chacune de ces personnes aussi. C'est pourquoi je suis extrêmement reconnaissant pour chaque seconde qui a été consacré à faire de ce projet se produire. Plus nous avons de contributeurs, plus cet effort peut être réparti et le plus nous pourrons faire ensemble. Je voudrais vous encourager tous à choisir une chose que vous pouvez contribuer, si elle confirme le bogue de quelqu'un, suggérer un correctif, faire un changement de documentation ou aider quelqu'un qui en a besoin. Toutes ces petites choses ont un impact énorme! Ça serait si génial si vous aussi faisiez aussi parti de l'histoire de la v3.
+
+Profitez bien!
+
+&dash; Lea
+
+PS : Si vous ou votre entreprise trouvez Wails utile, veuillez envisager [de parrainer le projet](https://github.com/sponsors/leaanthony). Merci !
